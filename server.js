@@ -6,6 +6,8 @@ const path = require('path');
 
 require('dotenv').config();
 
+mongoose.set('strictQuery', false);
+
 // Define routes
 let index = require('./routes/index');
 let image = require('./routes/image');
