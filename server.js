@@ -2,33 +2,38 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require('path');
-const config = require('./_config');
+
+
+require('dotenv').config();
+
 
 // Define routes
 let index = require('./routes/index');
 let image = require('./routes/image');
 
-// Initializing the app
-const app = express();
-
 // connecting the database
+// let mongodb_url = 'mongodb://localhost:27017/';
+// let dbName = 'darkroom';
+// mongoose.connect(`${mongodb_url}${dbName}`,{ useNewUrlParser: true , useUnifiedTopology: true }, (err)=>{
+//     if (err) console.log(err)
+// });
 
-const MONGODB_URI = process.env.MONGODB_URI || config.mongoURI[app.settings.env]
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true  },(err)=>{
-    if (err) {
-        console.log(err)
-    }else{
-        console.log(`Connected to Database: ${MONGODB_URI}`)
-    }
-});
+const {username = process.env.MONGOUSER,
+    userpassword = process.env.MONGOPASSWORD,
+    mongocluster = process.env.MONGOHOST,
+    prod_env = process.env.MONGOPRODUCTIONDATABASE,} = process.env;
+
+//mongoose.connect(`mongodb+srv://${username}:${userpassword}@${mongocluster}/${prod_env}?retryWrites=true&w=majority`,{ useNewUrlParser: true , useUnifiedTopology: true })
+
+const mongoURI = `mongodb+srv://${username}:${userpassword}@${mongocluster}/${prod_env}?retryWrites=true&w=majority`
 
 // test if the database has connected successfully
-// let db = mongoose.connection;
-// db.once('open', ()=>{
-//     console.log('Database connected successfully')
-// })
+mongoose.connect(mongoURI, { useNewUrlParser: true , useUnifiedTopology: true })
+.then(() => console.log('MongoDB connected...'))
+.catch(err => console.log("MongoDB connection failed", err));
 
-
+// Initializing the app
+const app = express();
 
 
 // View Engine
@@ -48,9 +53,11 @@ app.use('/image', image);
 
  
 const PORT = process.env.PORT || 5000;
-app.listen(PORT,() =>{
-    console.log(`Server is listening at http://localhost:${PORT}`)
-});
 
+if (process.env.NODE_ENV !== "test") {
+  app.listen(PORT, () => {
+    console.log(`Server is listening at http://localhost:${PORT}`);
+  });
+}
 
 module.exports = app;
