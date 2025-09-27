@@ -6,7 +6,6 @@ const path = require('path');
 
 require('dotenv').config();
 
-
 // Define routes
 let index = require('./routes/index');
 let image = require('./routes/image');
@@ -18,6 +17,7 @@ let image = require('./routes/image');
 //     if (err) console.log(err)
 // });
 
+
 const {username = process.env.MONGOUSER,
     userpassword = process.env.MONGOPASSWORD,
     mongocluster = process.env.MONGOHOST,
@@ -28,6 +28,9 @@ const {username = process.env.MONGOUSER,
 const mongoURI = `mongodb+srv://${username}:${userpassword}@${mongocluster}/${prod_env}?retryWrites=true&w=majority`
 
 // test if the database has connected successfully
+mongoose.connect(mongoURI, { useNewUrlParser: true , useUnifiedTopology: true })
+.then(() => console.log('MongoDB connected...'))
+.catch(err => console.log("MongoDB connection failed", err));
 mongoose.connect(mongoURI, { useNewUrlParser: true , useUnifiedTopology: true })
 .then(() => console.log('MongoDB connected...'))
 .catch(err => console.log("MongoDB connection failed", err));
