@@ -19,7 +19,7 @@ describe('Photos', function(){
     .end(function (err, res) {
       res.should.have.status(200);
       res.should.be.html;
-      res.text.should.be.a('string'); // ✅ HTML lives here
+      res.text.should.be.a('string');
       done();
     });
 });
