@@ -46,7 +46,7 @@ pipeline{
     slackSend(
         channel: '#gerald_ip1',
         tokenCredentialId: 'slack-gallery-bot',
-        message: "Build: ${currentBuild.fullDisplayName} has been successful!\n View the web service at : https://gallery-1-kl9v.onrender.com"
+        message: "Build: ${currentBuild.fullDisplayName} has been successful!\n View the web service at : https://gallery-r1zu.onrender.com"
         )
   }
   failure {
