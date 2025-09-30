@@ -22,8 +22,8 @@ const mongoURI = `mongodb+srv://${username}:${userpassword}@${mongocluster}/${pr
 
 // Connect to MongoDB
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('✅ MongoDB connected...'))
-  .catch(err => console.error("❌ MongoDB connection failed", err));
+  .then(() => console.log('MongoDB connected...'))
+  .catch(err => console.error("MongoDB connection failed", err));
 
 // Initialize the app
 const app = express();
