@@ -33,9 +33,7 @@ const mongoURI = `mongodb+srv://${username}:${userpassword}@${mongocluster}/${pr
 mongoose.connect(mongoURI, { useNewUrlParser: true , useUnifiedTopology: true })
 .then(() => console.log('MongoDB connected...'))
 .catch(err => console.log("MongoDB connection failed", err));
-mongoose.connect(mongoURI, { useNewUrlParser: true , useUnifiedTopology: true })
-.then(() => console.log('MongoDB connected...'))
-.catch(err => console.log("MongoDB connection failed", err));
+
 
 // Initializing the app
 const app = express();
